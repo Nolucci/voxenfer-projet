@@ -1,0 +1,29 @@
+# Gateway Voxenfer : reverse proxy Caddy -- À COMPLÉTER par le groupe G1.
+# Auteur : Philippe ROUSSILLE <roussille@3il.fr>
+#
+# Caddy est le SEUL point d'entrée exposé. Il route chaque préfixe d'URL vers le
+# bon service (par son nom Docker). `handle_path` retire le préfixe avant de
+# transmettre : /comptes/login arrive en /login côté service-comptes.
+# Caddy écoute sur :80 dans son conteneur ; le port hôte est fixé dans compose.
+#
+# À FAIRE (G1) : un bloc par service. La table de routage complète est dans
+# 2-contrats.md. Un seul exemple est donné ci-dessous : complétez les autres.
+
+:80 {
+	# Modèle (NEUTRE) d'un bloc de routage, à recopier pour CHAQUE service.
+	# Remplacez "exemple" par le préfixe public et "service-exemple" par le nom
+	# du conteneur (table de routage complète dans 2-contrats.md) :
+	#
+	#   handle_path /exemple/* {
+	#       reverse_proxy service-exemple:5000
+	#   }
+	#
+	# TODO G1 : un bloc par service (comptes, economie, boutique, classements,
+	# moderation, evenements, monde). Attention au service "evenements" : sa
+	# ressource est à la racine du service, routage particulier (voir 2-contrats.md).
+
+	# Page d'accueil minimale (pratique pour vérifier que Caddy tourne).
+	handle / {
+		respond "Gateway Voxenfer OK"
+	}
+}
