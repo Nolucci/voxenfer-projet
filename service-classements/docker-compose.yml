@@ -28,7 +28,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
 
   service-classements:
-    build: ./service-classements
+    build: .
     environment:
       <<: *jwt-secret
       DB_PATH: /data/classements.db

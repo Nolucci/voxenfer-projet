@@ -4,9 +4,10 @@ Vous allez construire **un micro-service** de l'écosystème Voxenfer (le serveu
 
 ## Par où commencer
 
-1. Lisez **`1-sujet.md`** : le contexte, votre service, ce qu'on attend, le barème.
-2. Lisez **`2-contrats.md`** : l'interface partagée (routes, champs JSON, codes). **À lire AVANT de coder**, et à valider tous ensemble en début de séance.
+1. Lisez **`service-classements/1-sujet.md`** : le contexte, votre service, ce qu'on attend, le barème.
+2. Lisez **`service-classements/2-contrats.md`** : l'interface partagée (routes, champs JSON, codes). **À lire AVANT de coder**, et à valider tous ensemble en début de séance.
 3. Le squelette est dans **`starter/`** (détails dans `starter/README.md`) : copiez `service-template/` pour créer votre `service-<votre-domaine>/`.
+4. Le service de l'équipe G5 est autonome dans **`service-classements/`** (voir son `README.md`).
 
 ## Démarrer l'écosystème
 

@@ -3,18 +3,22 @@
 Service feuille du projet Voxenfer : enregistre les points marqués par les
 joueurs et expose le classement. Pas d'appel sortant vers un autre service.
 
+Ce dossier est **autonome** : tout ce qu'il faut pour lancer et tester
+`service-classements` (code, contrat, harnais Docker, tests) est ici. On
+peut cloner uniquement `service-classements/` sans dépendre du reste du
+dépôt.
+
 ## Lancement
 
 ### En local
 
 ```bash
-cd service-classements
 pip install -r requirements.txt
 python app.py
 curl localhost:5000/health
 ```
 
-### Via docker compose (depuis la racine du projet)
+### Via docker compose (depuis ce dossier)
 
 Le service écoute toujours sur le port **5000 en interne** (imposé par le
 contrat) ; il n'est jamais exposé directement, on passe par la **gateway**
@@ -26,7 +30,7 @@ curl http://localhost:8080/classements/health
 curl http://localhost:8080/classements/classement
 ```
 
-> Le `docker-compose.yml` et le `Caddyfile` à la racine du dépôt sont un
+> Le `docker-compose.yml` et le `Caddyfile` de ce dossier sont un
 > **harnais de test local pour G5** (gateway + service-classements
 > seulement), en attendant le compose officiel de **G1** qui assemblera
 > tous les `service-*/`. Le bloc `service-classements` y est écrit pour
@@ -149,9 +153,9 @@ qui tourne (gateway + service-classements) et vérifie les codes HTTP :
 
 ```bash
 docker compose up --build -d
-./service-classements/test.sh
+./test.sh
 # ou contre une autre base :
-./service-classements/test.sh http://localhost:8080
+./test.sh http://localhost:8080
 ```
 
 ## Bonus implémentés
