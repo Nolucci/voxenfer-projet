@@ -1,0 +1,21 @@
+# Gateway de test LOCAL pour service-classements (G5).
+# Aligné sur le Caddyfile officiel de G1 : même style de bloc (redir +
+# handle_path), à recopier tel quel dans la gateway commune.
+
+:80 {
+	redir /classements /classements/ 308
+
+	handle_path /classements/* {
+		reverse_proxy service-classements:5000
+	}
+
+	handle / {
+		header Content-Type application/json
+		respond `{"status":"ok","service":"gateway","projet":"Voxenfer (test local G5)"}` 200
+	}
+
+	handle {
+		header Content-Type application/json
+		respond `{"erreur":"route publique inconnue"}` 404
+	}
+}

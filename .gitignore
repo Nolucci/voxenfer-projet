@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# Bases SQLite locales (chaque service a la sienne, jamais commitée)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Éditeurs / IDE
+.vscode/
+.idea/
+*.swp
+
+# macOS
+.DS_Store
+
+# Artefacts Docker / compose locaux
+docker-compose.override.yml
+
+# Luanti (gros téléchargements, régénérés par starter/jouer.sh)
+starter/minetest_game/
+starter/minetest_game.zip
+
+# Logs divers
+*.log

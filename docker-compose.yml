@@ -1,0 +1,40 @@
+# Compose de test LOCAL pour service-classements (G5).
+#
+# Aligné sur le docker-compose.yml officiel de G1 (gateway + secret JWT +
+# healthcheck + nom de volume identiques) : le bloc "service-classements"
+# ci-dessous peut être recopié tel quel dans le compose final de G1 sans
+# aucune divergence.
+#
+# Lancer :   docker compose up --build
+# Tester :   curl http://localhost:8080/classements/classement
+# Arrêter :  docker compose down -v
+
+x-jwt: &jwt-secret
+  JWT_SECRET: "je-suis-le-secret-tres-secret-12"
+
+x-python-healthcheck: &python-healthcheck
+  test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health', timeout=2)"]
+  interval: 10s
+  timeout: 3s
+  retries: 5
+  start_period: 5s
+
+services:
+  gateway:
+    image: caddy:2
+    ports:
+      - "8080:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+
+  service-classements:
+    build: ./service-classements
+    environment:
+      <<: *jwt-secret
+      DB_PATH: /data/classements.db
+    volumes:
+      - classements-data:/data
+    healthcheck: *python-healthcheck
+
+volumes:
+  classements-data:

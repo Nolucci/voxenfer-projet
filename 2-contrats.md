@@ -103,11 +103,21 @@ Exemple : `POST /comptes/login` arrive en `POST /login` sur `service-comptes`.
 
 | Méthode | Route | Auth | Rôle |
 |--------:|:------|:-----|:-----|
-| GET | `/classement` | - | top joueurs (triés par points) |
-| GET | `/scores/<pseudo>` | - | `{pseudo, points}` |
-| POST | `/scores` | jwt | `{pseudo, points}` (ajoute des points) |
+| GET | `/classement` | - | top joueurs `[{pseudo, points}]`, triés par points décroissants |
+| GET | `/scores/<pseudo>` | - | `{pseudo, points}` ; **404** si le pseudo est inconnu (décision documentée) |
+| POST | `/scores` | jwt | `{pseudo, points}` (entier ≥ 0) -> **ajoute** `points` au score existant, crée la ligne si absente ; **400** si `pseudo`/`points` invalides |
+| GET | `/classement/top/<n>` | - | **étoffé** : les `n` premiers du classement `[{pseudo, points}]` |
+| GET | `/classement/periode/<periode>` | - | **bonus** : `periode` = `jour` ou `semaine` ; classement restreint aux points gagnés sur la période `[{pseudo, points}]` |
+| GET | `/classement?page=<p>&taille=<t>` | - | **bonus** : pagination du classement complet |
+| GET | `/badges/<pseudo>` | - | **bonus** : badges obtenus par seuil de points `[{seuil, nom}]` |
 
-*À compléter par l'équipe : routes étoffées et détail des champs JSON.*
+Décisions actées par l'équipe G5 :
+- `GET /scores/<pseudo>` renvoie **404** pour un pseudo sans score (pas `{points:0}`).
+- `POST /scores` **ajoute** (cumule) les points, il ne fixe pas un total.
+- Aucune vérification de l'existence du pseudo auprès de `service-comptes` (confiance au payload/jeton).
+- Le bonus "par période" s'appuie sur une table d'historique des gains horodatés, en plus du total cumulé dans `scores`.
+
+*Section complétée par l'équipe G5.*
 
 ## service-moderation (G6) - signalements, bans
 
